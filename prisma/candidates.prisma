@@ -1,0 +1,16 @@
+model Position {
+    id String @id @default(uuid())
+    title String
+
+    Candidate Candidate[]
+}
+
+model Candidate {
+    candidateId String @id @default(uuid())
+
+    Position Position @relation(fields: [positionId], references: [id])
+    positionId String
+
+    Student Student @relation(fields: [studentId], references: [studentId])
+    studentId String
+}

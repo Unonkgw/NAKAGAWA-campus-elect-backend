@@ -1,0 +1,6 @@
+model Vote {
+    id String @id @default(cuid())
+
+    Voter Student @relation(references: [studentId], fields: [electionId])
+    electionId String
+}
