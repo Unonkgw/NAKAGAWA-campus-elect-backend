@@ -33,10 +33,72 @@ async function seedElections() {
     })
 }
 
+async function seedStudents() {
+    const students = [
+        {
+            studentId: "AdDU001",
+            email: "jnakagawa@gmail.com",
+            name: "Yssabelle Nakagawa",
+            department: "Computer Studies"
+        },
+        {
+            studentId: "AdDU002",
+            email: "ubararan@yahoo.com",
+            name: "Uno Baran",
+            department: "Computer Studies"
+        },
+        {
+            studentId: "AdDU003",
+            email: "jkim@gmail.com",
+            name: "Jisoo Kim",
+            department: "Computer Studies"
+        }
+    ];
+
+    for (const student of students) {
+        await prisma.student.upsert({
+            where: { studentId: student.studentId },
+            update: {},           
+            create: student      
+        });
+    }
+}
+
+async function seedCandidates() {
+    const candidates = [
+        {
+            candidateId: "c001", 
+            studentId: "AdDU001",   
+            positionId: "election-2025-president"
+        },
+        {
+            candidateId: "c002",
+            studentId: "AdDU002",    
+            positionId: "election-2025-president"
+        }
+    ];
+
+    for (const candidate of candidates) {
+        await prisma.candidate.upsert({
+            where: { candidateId: candidate.candidateId },
+            update: {},
+            create: {
+                candidateId: candidate.candidateId,
+                studentId: candidate.studentId,
+                positionId: candidate.positionId
+            }
+        });
+    }
+}
+
+
+
 async function main() {
     console.log("SEEDING DATABASE...");
 
     await seedElections();
+    await seedStudents();      
+    await seedCandidates();    
 
     console.log("FINISHED SEEDING");
 }
