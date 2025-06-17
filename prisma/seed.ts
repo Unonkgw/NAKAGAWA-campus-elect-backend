@@ -37,19 +37,19 @@ async function seedStudents() {
     const students = [
         {
             studentId: "AdDU001",
-            email: "jnakagawa@gmail.com",
+            email: "ynakagawa@addu.edu.ph",
             name: "Yssabelle Nakagawa",
             department: "Computer Studies"
         },
         {
             studentId: "AdDU002",
-            email: "ubararan@yahoo.com",
+            email: "ubararan@addu.edu.ph",
             name: "Uno Baran",
             department: "Computer Studies"
         },
         {
             studentId: "AdDU003",
-            email: "jkim@gmail.com",
+            email: "jkim@addu.edu.ph",
             name: "Jisoo Kim",
             department: "Computer Studies"
         }
