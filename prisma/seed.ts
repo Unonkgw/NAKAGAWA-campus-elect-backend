@@ -33,6 +33,8 @@ async function seedElections() {
     })
 }
 
+
+
 async function seedStudents() {
     const students = [
         {
@@ -58,36 +60,22 @@ async function seedStudents() {
     for (const student of students) {
         await prisma.student.upsert({
             where: { studentId: student.studentId },
-            update: {},           
-            create: student      
-        });
-    }
-}
-
-async function seedCandidates() {
-    const candidates = [
-        {
-            candidateId: "c001", 
-            studentId: "AdDU001",   
-            positionId: "election-2025-president"
-        },
-        {
-            candidateId: "c002",
-            studentId: "AdDU002",    
-            positionId: "election-2025-president"
-        }
-    ];
-
-    for (const candidate of candidates) {
-        await prisma.candidate.upsert({
-            where: { candidateId: candidate.candidateId },
             update: {},
-            create: {
-                candidateId: candidate.candidateId,
-                studentId: candidate.studentId,
-                positionId: candidate.positionId
-            }
+            create: student
         });
+
+        
+        if (student.studentId === "AdDU001" || student.studentId === "AdDU002") {
+            await prisma.candidate.upsert({
+                where: { candidateId: `cand-${student.studentId}` },
+                update: {},
+                create: {
+                    candidateId: `cand-${student.studentId}`,
+                    studentId: student.studentId,
+                    positionId: "election-2025-president"
+                }
+            });
+        }
     }
 }
 
@@ -97,8 +85,7 @@ async function main() {
     console.log("SEEDING DATABASE...");
 
     await seedElections();
-    await seedStudents();      
-    await seedCandidates();    
+    await seedStudents();         
 
     console.log("FINISHED SEEDING");
 }
