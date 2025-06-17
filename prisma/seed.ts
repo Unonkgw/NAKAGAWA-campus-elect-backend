@@ -43,8 +43,8 @@ async function seedStudents() {
         },
         {
             studentId: "AdDU002",
-            email: "ubararan@addu.edu.ph",
-            name: "Uno Baran",
+            email: "ibaran@addu.edu.ph",
+            name: "Isa Baran",
             department: "Computer Studies"
         },
         {
