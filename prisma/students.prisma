@@ -3,6 +3,7 @@ model Student {
     email String
     name String
     department String
+    role Role @default(STUDENT)
     
     Candidate Candidate[]
     Vote Vote[]

@@ -1,8 +1,9 @@
-import { Get, Query, Controller } from '@nestjs/common';
+import { Get, Query, Post, Body, Controller } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service'
-import { ApiOperation, ApiResponse, ApiTags, ApiQuery } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { ReturnedStudentDto } from 'src/users/dto/students.dto';
 import { Student } from '@prisma/client';
+import { CreateStudentDto } from 'src/users/dto/createstudent.dto';
 
 
 @ApiTags('Students')
@@ -60,5 +61,26 @@ export class UsersController {
         return await this.usersService.findStudentById({
             id: id
         })
+    }
+
+    @Post('students')
+    @ApiOperation({
+        summary: 'Create a new student',
+        description: 'Creates a new student using the request body.',
+    })
+    @ApiBody({ type: CreateStudentDto })
+    @ApiResponse({
+        status: 201,
+        description: 'Student created successfully.',
+        type: ReturnedStudentDto,
+    })
+    @ApiResponse({
+        status: 400,
+        description: 'Invalid input.',
+    })
+    async createStudent(
+    @Body() createStudentDto: CreateStudentDto,
+    ): Promise<Student> {
+        return await this.usersService.createStudent(createStudentDto);
     }
 }

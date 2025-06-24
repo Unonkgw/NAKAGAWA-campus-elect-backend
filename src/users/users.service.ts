@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService} from 'src/prisma.service'
 import { Student } from '@prisma/client';
+import { CreateStudentDto } from 'src/users/dto/createstudent.dto';
 @Injectable()
 export class UsersService {
     constructor(private prisma: PrismaService){}
@@ -32,5 +33,14 @@ export class UsersService {
         }
 
         return student;
+    }
+
+        /**
+     * Creates a new student 
+     */
+    async createStudent(data: CreateStudentDto): Promise<Student> {
+        return this.prisma.student.create({
+            data,
+        });
     }
 }
